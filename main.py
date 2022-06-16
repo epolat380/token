@@ -1,24 +1,34 @@
 import os
+from random import random
 
-def abbreviate(val):
+def alnum(str):
+  return ''.join(ch for ch in str if ch.isalnum())
+
+def abbreviate(val, c):
   alist = val.split(' ')
   abbrev = ''
   i = 0
-  for elt in alist: 
-    if (len(alist) <= 3):
-      if (i == 0):
-        abbrev += elt.casefold()
-      else:
-        abbrev += elt[0].upper() +  elt[1:].casefold()
-    else: 
-      try:
+  for elt in alist:
+    elt = alnum(elt)
+    if (len(elt) > 0): 
+      if (len(alist) <= 3):
         if (i == 0):
-          abbrev += elt[:4].casefold()
+          abbrev += elt.casefold()
         else:
-          abbrev += elt[0].upper() + elt[1:4].casefold()
-      except:
-        abbrev
+          abbrev += elt[0].upper() +  elt[1:].casefold()
+      else: 
+        try:
+          if (i == 0):
+            abbrev += elt[:4].casefold()
+          else:
+            abbrev += elt[0].upper() + elt[1:4].casefold()
+        except:
+          abbrev
+    else:
+      continue
     i += 1
+  if len(abbrev) == 0:
+    abbrev = 'constant' + str(c)
   abbrev = abbrev.replace("\n", "")
   return abbrev
 
@@ -34,7 +44,7 @@ def create_map(lines):
         abbrev = 'sentence' + str(c)
         c = c + 1
       else:
-        abbrev = abbreviate(val)
+        abbrev = abbreviate(val, c)
       pre = var[:var.rindex('.')]
       key = pre + '.'+ abbrev
       map[var] = key
@@ -69,6 +79,7 @@ def final_templates(html, map1):
   return html
 
 def read(path):
+  print(path)
   with open(path, 'r') as r:
     text = r.readlines()
     return text
