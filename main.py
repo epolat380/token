@@ -32,7 +32,6 @@ def create_map(lines):
       val = temp[1].split(';')[0]
       if (len(val.split(' ')) > 5):
         abbrev = 'sentence' + str(c)
-        print('HELLO')
         c = c + 1
       else:
         abbrev = abbreviate(val)
@@ -104,9 +103,10 @@ def main():
   src_path = input("Enter path to commons_en: ")
   i18n_path = input("Enter path to i18n: ")
   templates_path = input("Enter path to templates: ")
-  map1 = remove_dup_keys(create_map(read(src_path)))
+  map2 = create_map(read(src_path))
+  map1 = remove_dup_keys(map2)
   driver_comm(i18n_path, map1)
-  driver_temp(templates_path, map1)
+  driver_temp(templates_path, map2)
 
 if __name__ == "__main__":
   main()
