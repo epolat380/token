@@ -24,12 +24,18 @@ def abbreviate(val):
 
 def create_map(lines): 
   map = {}
+  c = 0
   for elt in lines:
-    if elt != '\n': 
+    if (elt != '\n' and elt.find('=') != -1): 
       temp = elt.split('=')
       var = temp[0]
       val = temp[1].split(';')[0]
-      abbrev = abbreviate(val)
+      if (len(val.split(' ')) > 5):
+        abbrev = 'sentence' + str(c)
+        print('HELLO')
+        c = c + 1
+      else:
+        abbrev = abbreviate(val)
       pre = var[:var.rindex('.')]
       key = pre + '.'+ abbrev
       map[var] = key
